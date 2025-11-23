@@ -5,6 +5,7 @@
 This project analyzes Airbnb listings in Bangkok to help hosts optimize their listing performance and competitiveness. The analysis focuses on how to attracts backpackers accomodation segment in Bangkok.
 
 **Role:** Data Analysis or Consultant
+
 **Objective:** Provide actionable insights for Airbnb hosts to improve their listing performance through data-driven recommendations.
 
 ---
@@ -115,6 +116,15 @@ Hosts can act on:
 - **Geopandas 1.1.1** - Spatial Processing
 - **Tableau Public** - Interactive dashboards
 - **Microsoft Powerpoint** - Presentation
+
+---
+
+## How to run the script?
+**.ipynb files:**
+
+- Option 1: using Microsoft Visual Studio Code (VSCode) with appropriate Kernel (see technology and library used)
+- Option 2: using google collab
+- Option 3: using Anaconda juypiterlab
 
 ---
 
