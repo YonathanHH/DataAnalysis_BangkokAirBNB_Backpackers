@@ -23,7 +23,7 @@ This project analyzes Airbnb listings in Bangkok to help hosts optimize their li
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 **Main Dataset Name:** Airbnb Listings Bangkok.csv
 **Cleaned Dataset Name:** Airbnb_Listings_Bangkok_Budget.xlsx
@@ -55,7 +55,7 @@ This project analyzes Airbnb listings in Bangkok to help hosts optimize their li
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 airbnb-bangkok-analysis/
@@ -144,9 +144,9 @@ Hosts can act on:
 
 ## Resources
 
-- **Tableau Public Dashboard:** Tableau Dashboard files in .twbx
-- **Presentation Slides:** Presentation Files in .pptx [presentation files](https://docs.google.com/presentation/d/1h9HsgMcst63qiFTZWb3Lc8vs8THFTa62/edit?usp=sharing&ouid=117421172314407535268&rtpof=true&sd=true)
-- **Airbnb Data Source:** Bangkok Airbnb marketplace data [tableau public](https://public.tableau.com/app/profile/yonathan.hary.hutagalung/viz/Capstone_module_2_final/0_Projectoverview?publish=yes)
+- **Tableau Public Dashboard:** Tableau Dashboard files in .twbx [tableau public](https://public.tableau.com/app/profile/yonathan.hary.hutagalung/viz/Capstone_module_2_final/0_Projectoverview?publish=yes)
+- **Presentation Slides:** Presentation Files in .pptx [presentation files]([https://docs.google.com/presentation/d/1h9HsgMcst63qiFTZWb3Lc8vs8THFTa62/edit?usp=sharing&ouid=117421172314407535268&rtpof=true&sd=true](https://docs.google.com/presentation/d/1rYgdscPAuJgUNeDcyshYs1gvLMJTqpeH/edit?usp=drive_link&ouid=117421172314407535268&rtpof=true&sd=true))
+- **Airbnb Data Source:** Bangkok Airbnb marketplace data 
 - **Data Dictionary:** See attached Airbnb Listings Bangkok Data Dictionary
 
 ---
