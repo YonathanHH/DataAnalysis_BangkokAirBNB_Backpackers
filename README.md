@@ -1,4 +1,4 @@
-# Airbnb Bangkok Listings Analysis - Capstone Module 2
+# Airbnb Bangkok Listings Analysis
 
 ## Project Overview
 
