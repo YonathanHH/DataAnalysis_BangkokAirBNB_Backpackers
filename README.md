@@ -62,7 +62,7 @@ This project analyzes Airbnb listings in Bangkok to help hosts optimize their li
 airbnb-bangkok-analysis/
 │
 ├── README.md                          # This file
-├── CapstoneModule2.ipynb              # Main analysis notebook
+├── EDA_AirBNB.ipynb              # Main analysis notebook
 │
 ├── data/
 │   ├── Airbnb Listings Bangkok.csv            # Raw dataset
@@ -71,8 +71,8 @@ airbnb-bangkok-analysis/
 │   ├── initial_cleaning.ipynb                 # Shapefile cleaning notebook
 │   └── bangkok_districts_fixed_1.shp          # Clean data
 │
-├── Capstone_Project_2_Presentation.pptx       # Presentation files
-└── Capstone_module_2_final.twbx               # Tableau dashboard
+├── Presentation_AirBNB.pptx                   # Presentation files
+└── Bangkok_AirBNB.twbx                        # Tableau dashboard
 ```
 
 ---
