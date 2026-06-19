@@ -1,0 +1,29 @@
+# Data files - store locally
+data/*.csv
+data/*.xlsx
+data/*.shp
+data/*.dbf
+data/*.prj
+data/*.shx
+data/*.cpg
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environments
+.env
+venv/
+.venv/
+env/
+*.conda
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
