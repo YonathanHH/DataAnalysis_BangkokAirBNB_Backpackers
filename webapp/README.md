@@ -19,7 +19,7 @@ bookable in next 365 days   6,619   <- the analysed frame
 
 Every statistical test is then reimplemented in `src/lib/stats.ts` and
 **recomputed in the browser** against whatever slice the reader has filtered to.
-`scripts/verify-stats.mts` asserts that, on the unfiltered frame, those live
+`scripts/verify-stats.mjs` asserts that, on the unfiltered frame, those live
 figures reproduce SciPy's to three or four decimals — including Yates'
 continuity correction on the 2×2 chi-square, which the notebook's
 `chi2_contingency` applies by default.
@@ -56,7 +56,7 @@ pipeline drifts or the statistics stop matching.
 ```
 scripts/
   build-data.mjs      Cleaning pipeline port + row-count assertions
-  verify-stats.mts    Live statistics vs the notebook's SciPy output
+  verify-stats.mjs    Live statistics vs the notebook's SciPy output
 src/
   data/               Generated payload + the notebook's published findings
   lib/                Data decoding, filtering, statistics, formatting

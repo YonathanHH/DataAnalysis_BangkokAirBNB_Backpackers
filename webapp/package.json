@@ -6,11 +6,14 @@
   "description": "Interactive dashboard for the Bangkok Airbnb backpacker-segment analysis",
   "scripts": {
     "data": "node scripts/build-data.mjs",
-    "verify": "node scripts/verify-stats.mts",
+    "verify": "node scripts/verify-stats.mjs",
     "dev": "npm run data && vite",
     "build": "npm run data && npm run verify && tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -21,6 +24,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "esbuild": "^0.25.0",
     "typescript": "^5.7.3",
     "vite": "^6.0.11"
   }

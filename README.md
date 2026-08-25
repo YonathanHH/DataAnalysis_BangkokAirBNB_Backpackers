@@ -113,7 +113,7 @@ DataAnalysis_BangkokAirBNB_Backpackers/
 │
 ├── webapp/                                    # Interactive web dashboard (Vite + React)
 │   ├── scripts/build-data.mjs                 # Re-runs the notebook cleaning at build time
-│   ├── scripts/verify-stats.mts               # Asserts live stats match the notebook's SciPy output
+│   ├── scripts/verify-stats.mjs               # Asserts live stats match the notebook's SciPy output
 │   └── src/                                   # Charts, sections, statistics
 └── vercel.json                                # Deployment config (no Vercel settings needed)
 ```
