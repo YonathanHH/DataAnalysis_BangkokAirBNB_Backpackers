@@ -231,10 +231,10 @@ export function Overview({ rows, slice }: { rows: Listing[]; slice: string }) {
           span={12}
           note={
             <>
-              The repository's shapefile ships without its <code>.dbf</code> and{' '}
-              <code>.shx</code> sidecars, so district outlines cannot be read from it. This
-              map is built from listing coordinates alone — the shape of the city emerges
-              from where hosts actually are.
+              Bangkok's 50 district outlines are read straight from the bundled
+              shapefile at build time; each dot is one listing, coloured by nightly
+              price. The frame is the city rather than the data, so filtering thins the
+              dots without moving the map underneath them.
             </>
           }
         >

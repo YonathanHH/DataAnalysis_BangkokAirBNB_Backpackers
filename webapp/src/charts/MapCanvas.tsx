@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTooltip } from '../components/ui';
 import { SEQUENTIAL, resolveVar, useMeasure, useThemeVersion } from './shared';
+import districts from '../data/districts.json';
 
 export interface MapPoint {
   lat: number;
@@ -29,9 +30,11 @@ interface Props {
 const LON_SCALE = Math.cos((13.75 * Math.PI) / 180);
 
 /**
- * Listings placed by their WGS84 coordinates. The shapefile that ships with the
- * repo has no .dbf or .shx sidecar, so district outlines cannot be read from
- * it; the geography here comes entirely from the listing coordinates.
+ * Listings placed by their WGS84 coordinates over Bangkok's 50 district
+ * outlines, which scripts/build-geo.mjs extracts from the bundled shapefile.
+ *
+ * The frame is the district bounding box rather than the listings' own, so it
+ * stays put while filters change: dots come and go against a fixed city.
  */
 export function MapCanvas({
   points,
@@ -51,15 +54,9 @@ export function MapCanvas({
     setRamp(SEQUENTIAL.map((token) => resolveVar(token)));
   }, [themeVersion]);
 
-  /** Bounding box of the cloud, aspect-corrected for latitude. */
+  /** City bounding box, aspect-corrected for latitude. Constant by design. */
   const bounds = useMemo(() => {
-    if (!points.length) return null;
-    const lats = points.map((p) => p.lat);
-    const lons = points.map((p) => p.lon);
-    const minLat = Math.min(...lats);
-    const maxLat = Math.max(...lats);
-    const minLon = Math.min(...lons);
-    const maxLon = Math.max(...lons);
+    const [minLon, minLat, maxLon, maxLat] = districts.bbox;
     return {
       minLat,
       maxLat,
@@ -67,7 +64,7 @@ export function MapCanvas({
       spanX: (maxLon - minLon) * LON_SCALE || 1,
       spanY: maxLat - minLat || 1,
     };
-  }, [points]);
+  }, []);
 
   const PAD = 18;
 
@@ -76,14 +73,14 @@ export function MapCanvas({
    * the city fills the card's width instead of floating in side gutters.
    */
   const height = useMemo(() => {
-    if (!bounds || width <= 0) return Math.min(maxHeight, 360);
+    if (width <= 0) return Math.min(maxHeight, 360);
     const fitted = (width - PAD * 2) * (bounds.spanY / bounds.spanX) + PAD * 2;
     return Math.round(Math.max(300, Math.min(maxHeight, fitted)));
   }, [bounds, width, maxHeight]);
 
   /** Equirectangular fit of the point cloud into the sized canvas. */
   const project = useMemo(() => {
-    if (!bounds || width <= 0) return null;
+    if (width <= 0) return null;
     const usableW = width - PAD * 2;
     const usableH = height - PAD * 2;
     const scale = Math.min(usableW / bounds.spanX, usableH / bounds.spanY);
@@ -141,6 +138,21 @@ export function MapCanvas({
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
+
+    // One path for all 50 rings: a single fill and stroke for the whole city.
+    ctx.beginPath();
+    for (const ring of districts.rings) {
+      ctx.moveTo(project.x(ring[0]), project.y(ring[1]));
+      for (let i = 2; i < ring.length; i += 2) {
+        ctx.lineTo(project.x(ring[i]), project.y(ring[i + 1]));
+      }
+      ctx.closePath();
+    }
+    ctx.fillStyle = resolveVar('var(--surface-sunk)');
+    ctx.fill();
+    ctx.strokeStyle = resolveVar('var(--axis)');
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
     const surface = resolveVar('var(--surface)');
     // Largest marks first, so small dense ones stay visible on top.

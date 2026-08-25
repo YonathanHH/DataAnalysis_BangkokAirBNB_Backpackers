@@ -127,8 +127,8 @@ export function Geography({ rows, slice }: { rows: Listing[]; slice: string }) {
             <>
               Two encodings, two questions: size answers "how much competition is here",
               colour answers "how fast does it move". The bubbles sit at the centroid of
-              each district's own listings, since the bundled shapefile is missing the
-              sidecar files needed to read real boundaries.
+              each district's own listings, over the district outlines read from the
+              bundled shapefile.
             </>
           }
         >
