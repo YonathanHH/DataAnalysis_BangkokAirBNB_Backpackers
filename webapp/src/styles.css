@@ -58,6 +58,12 @@
 
   --focus: #2a78d6;
 
+  /* Map: land must read lighter than the surround, or the city has no edge. */
+  --map-water: #e8e7e1;
+  --map-land: #fbfbf9;
+  --map-graticule: rgba(11, 11, 11, 0.055);
+  --map-coast: #b6b5a9;
+
   --radius: 10px;
   --radius-sm: 6px;
   --shadow: 0 1px 2px rgba(11, 11, 11, 0.04), 0 6px 20px rgba(11, 11, 11, 0.05);
@@ -109,6 +115,11 @@
     --success-text: #0ca30c;
     --focus: #3987e5;
 
+    --map-water: #121211;
+    --map-land: #262625;
+    --map-graticule: rgba(255, 255, 255, 0.05);
+    --map-coast: #4a4a45;
+
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
   }
 }
@@ -155,6 +166,11 @@
 
   --success-text: #0ca30c;
   --focus: #3987e5;
+
+  --map-water: #121211;
+  --map-land: #262625;
+  --map-graticule: rgba(255, 255, 255, 0.05);
+  --map-coast: #4a4a45;
 
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
 }
@@ -844,7 +860,7 @@ tbody tr:last-child td {
   height: auto;
   display: block;
   border-radius: var(--radius-sm);
-  background: var(--surface-sunk);
+  background: var(--map-water);
 }
 
 .scale-legend {

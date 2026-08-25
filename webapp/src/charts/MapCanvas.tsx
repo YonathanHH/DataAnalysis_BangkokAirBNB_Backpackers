@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTooltip } from '../components/ui';
-import { SEQUENTIAL, resolveVar, useMeasure, useThemeVersion } from './shared';
+import { SEQUENTIAL, mixHex, resolveVar, useMeasure, useThemeVersion } from './shared';
 import districts from '../data/districts.json';
 
 export interface MapPoint {
@@ -28,6 +28,13 @@ interface Props {
 
 /** Bangkok sits near 13.7°N, so longitude degrees are ~0.97 of a latitude degree. */
 const LON_SCALE = Math.cos((13.75 * Math.PI) / 180);
+
+/**
+ * Graticule interval in degrees. The city spans ~0.61° of longitude, so a
+ * tenth of a degree puts a line roughly every 150px — enough to read as a
+ * map's grid without turning into hatching behind the marks.
+ */
+const GRATICULE_STEP = 0.1;
 
 /**
  * Listings placed by their WGS84 coordinates over Bangkok's 50 district
@@ -139,6 +146,42 @@ export function MapCanvas({
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
 
+    const water = resolveVar('var(--map-water)');
+    const land = resolveVar('var(--map-land)');
+
+    /* -------------------------------------------------------------- */
+    /* Backdrop                                                        */
+    /*                                                                 */
+    /* Water, land and a graticule — enough for the canvas to read as   */
+    /* a map rather than a scatter plot on a blank field. Deliberately  */
+    /* not a tile basemap: the marks are the subject, and streets would */
+    /* compete with them.                                              */
+    /* -------------------------------------------------------------- */
+
+    // A slight vertical lift stops the surround reading as flat paper.
+    const wash = ctx.createLinearGradient(0, 0, 0, height);
+    wash.addColorStop(0, mixHex(water, land, 0.32));
+    wash.addColorStop(1, water);
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, width, height);
+
+    // Drawn before the land, so the grid survives only over open water.
+    ctx.strokeStyle = resolveVar('var(--map-graticule)');
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    const gridFrom = (v: number) => Math.ceil(v / GRATICULE_STEP) * GRATICULE_STEP;
+    for (let lon = gridFrom(bounds.minLon); lon <= bounds.minLon + bounds.spanX / LON_SCALE; lon += GRATICULE_STEP) {
+      const x = Math.round(project.x(lon)) + 0.5; // crisp on the device grid
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+    }
+    for (let lat = gridFrom(bounds.minLat); lat <= bounds.maxLat; lat += GRATICULE_STEP) {
+      const y = Math.round(project.y(lat)) + 0.5;
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+    }
+    ctx.stroke();
+
     // One path for all 50 rings: a single fill and stroke for the whole city.
     ctx.beginPath();
     for (const ring of districts.rings) {
@@ -148,9 +191,18 @@ export function MapCanvas({
       }
       ctx.closePath();
     }
-    ctx.fillStyle = resolveVar('var(--surface-sunk)');
+
+    // A soft drop shadow lifts the landmass off the water and gives the
+    // silhouette an edge the 1px border alone cannot carry.
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.30)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 3;
+    ctx.fillStyle = land;
     ctx.fill();
-    ctx.strokeStyle = resolveVar('var(--axis)');
+    ctx.restore();
+
+    ctx.strokeStyle = resolveVar('var(--map-coast)');
     ctx.lineWidth = 1;
     ctx.stroke();
 
