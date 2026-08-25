@@ -72,7 +72,13 @@ airbnb-bangkok-analysis/
 │   └── bangkok_districts_fixed_1.shp          # Clean data
 │
 ├── Presentation_AirBNB.pptx                   # Presentation files
-└── Bangkok_AirBNB.twbx                        # Tableau dashboard
+├── Bangkok_AirBNB.twbx                        # Tableau dashboard
+│
+├── webapp/                                    # Interactive web dashboard (Vite + React)
+│   ├── scripts/build-data.mjs                 # Re-runs the notebook cleaning at build time
+│   ├── scripts/verify-stats.mts               # Asserts live stats match the notebook's SciPy output
+│   └── src/                                   # Charts, sections, statistics
+└── vercel.json                                # Deployment config (no Vercel settings needed)
 ```
 
 ---
@@ -116,6 +122,8 @@ Hosts can act on:
 - **Geopandas 1.1.1** - Spatial Processing
 - **Tableau Public** - Interactive dashboards
 - **Microsoft Powerpoint** - Presentation
+- **Vite 6 + React 19 + TypeScript** - Interactive web dashboard
+- **Node.js 20+** - Build-time data pipeline and statistics verification
 
 ---
 
@@ -125,6 +133,19 @@ Hosts can act on:
 - Option 1: using Microsoft Visual Studio Code (VSCode) with appropriate Kernel (see technology and library used)
 - Option 2: using google collab
 - Option 3: using Anaconda juypiterlab
+
+**Web dashboard:**
+
+```bash
+cd webapp
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # data pipeline -> stats verification -> typecheck -> bundle
+```
+
+Deploy: import this repository into Vercel and press deploy. `vercel.json` at the
+repository root supplies the build command and output directory, so there is
+nothing to configure. Or run `npx vercel --prod` from the repository root.
 
 ---
 
@@ -150,12 +171,23 @@ Hosts can act on:
    - Competitive comparison views
    - Public link for stakeholder access
 
+4. **Interactive Web Dashboard (`webapp/`)**
+   - Filter by room type, price segment, host type and neighbourhood; every
+     chart, table and significance test re-runs against the selected slice
+   - Cleaning pipeline re-executed at build time and asserted against the row
+     counts printed in the notebook (15,854 -> 10,064 -> 6,619)
+   - Spearman, ANOVA and chi-square reimplemented in TypeScript and verified
+     against the notebook's SciPy output on every build
+   - Chart/table toggle on every figure, light and dark themes, responsive
+   - Deploys to Vercel with no configuration
+
 ---
 
 ## Resources
 
 - **Tableau Public Dashboard:** Tableau Dashboard files in .twbx [tableau public](https://public.tableau.com/app/profile/yonathan.hary.hutagalung/viz/Capstone_module_2_final/0_Projectoverview?publish=yes)
 - **Presentation Slides:** Presentation Files in .pptx [presentation files](https://docs.google.com/presentation/d/1rYgdscPAuJgUNeDcyshYs1gvLMJTqpeH/edit?usp=sharing&ouid=117421172314407535268&rtpof=true&sd=true)
+- **Interactive Web Dashboard:** Source in [`webapp/`](webapp/) — see [webapp/README.md](webapp/README.md) for how the notebook's figures are reproduced and verified
 - **Airbnb Data Source:** Bangkok Airbnb marketplace data 
 - **Data Dictionary:** See attached Airbnb Listings Bangkok Data Dictionary
 

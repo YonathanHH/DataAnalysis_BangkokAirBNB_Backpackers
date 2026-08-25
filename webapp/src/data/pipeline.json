@@ -1,0 +1,21 @@
+{
+  "funnel": [
+    {
+      "step": "Raw export",
+      "rows": 15854
+    },
+    {
+      "step": "Has at least one review",
+      "rows": 10064
+    },
+    {
+      "step": "Budget price < 2000 THB",
+      "rows": 7039
+    },
+    {
+      "step": "Bookable in next 365 days",
+      "rows": 6619
+    }
+  ],
+  "rpmMedian": 0.42
+}
